@@ -1,0 +1,29 @@
+---
+- name: enable httpd service on remote host
+  gather_facts: false
+  hosts: ansible1
+  tasks:
+    - name: install and start httpd web service
+      dnf:
+        name: httpd
+        state: latest
+    - name: start and enable httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      service:
+        name:  firewalld
+        state: started
+        enabled: yes
+    - name: open firewall ports
+      ansible.posix.firewalld:
+        service: http
+        immediate: yes
+        permanent: true
+        state: enabled
+    - name: copy prepared file to /var/html/www/ location
+      copy:
+        src: /tmp/index.html
+        dest: /var/www/html/
+            
