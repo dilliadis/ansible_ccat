@@ -1,12 +1,11 @@
 ---
 - name: variables demo
   gather_facts: false
-  vars:
-    myuser: anna
+  vars_files:
+    - varfile
   hosts: all
   tasks:
     - name: creating user {{ myuser }}
       user:
         name: "{{ myuser }}"
         shell: /bin/bash
-        state: absent
