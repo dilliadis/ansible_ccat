@@ -1,8 +1,6 @@
 ---
 - name: variables demo
   gather_facts: false
-  vars_files:
-    - varfile
   hosts: all
   tasks:
     - name: creating user {{ myuser }}
