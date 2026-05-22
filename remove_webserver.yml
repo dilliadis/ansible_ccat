@@ -1,0 +1,8 @@
+---
+- name: Stop and remove web server on RedHat and Ubuntu hosts
+  hosts: all
+  tasks:
+    - name: remove {{ webpackage }} 
+      package:
+        name: "{{ webpackage }}"
+        state: absent

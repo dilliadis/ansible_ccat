@@ -1,0 +1,13 @@
+---
+- name: Install and run web server on RedHat and Ubuntu hosts
+  hosts: all
+  tasks:
+    - name: Install {{ webpackage }} 
+      package:
+        name: "{{ webpackage }}"
+        state: latest
+    - name: Start {{ webpackage }}
+      service:
+        name: "{{ webservice }}"
+        state: started
+        enabled: yes

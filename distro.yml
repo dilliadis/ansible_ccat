@@ -1,0 +1,14 @@
+---
+- name: when demo
+  hosts: all
+  vars:
+    supported_distros:
+      - CentOS
+      - Fedora
+    mypackage: nmap
+  tasks:
+  - name: install RH family specific pkgs
+    yum:
+      name: "{{ mypackage }}"
+      state: present
+    when: ansible_distribution in supported_distros

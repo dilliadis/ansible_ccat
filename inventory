@@ -1,16 +1,6 @@
 [redhat]
 ansible1
-ansible2
 rhel1
-centos01
-centos02
 
 [ubuntu]
 ansible3
-
-[microsoft]
-windows11
-
-[tower]
-tower1
-tower2

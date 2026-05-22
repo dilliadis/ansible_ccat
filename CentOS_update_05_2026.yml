@@ -1,0 +1,18 @@
+---
+- name: Apply system updates
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update all packages on RHEL/CentOS
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+      register: update_logs
+
+    - name: Save the logs to a local file
+      ansible.builtin.copy:
+        content: "{{ update_logs | to_nice_json }}"
+        dest: "/var/log/ansible_updates/{{ inventory_hostname }}_update.log"
+      delegate_to: localhost

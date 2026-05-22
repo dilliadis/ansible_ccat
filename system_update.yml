@@ -1,0 +1,27 @@
+---
+- name: Comprehensive Update with Specific Logging
+  hosts: all
+  become: yes
+  tasks:
+    - name: Block for system update and logging
+      block:
+        - name: Update all packages
+        # For Debian/Ubuntu, use ansible.builtin.apt
+        # For RHEL/AlmaLinux, use ansible.builtin.dnf
+          ansible.builtin.package:
+            name: "*"
+            state: latest
+          register: pkg_update
+
+        - name: Write successful update log
+          ansible.builtin.lineinfile:
+            path: /var/log/system_update_history.log
+            line: "{{ lookup('pipe', 'date +%Y-%m-%d-%H:%M:%S') }} - Update Successful. {{ pkg_update.stdout }}"
+            create: yes
+
+      rescue:
+        - name: Write failure log
+          ansible.builtin.lineinfile:
+            path: /var/log/system_update_history.log
+            line: "{{ lookup('pipe', 'date +%Y-%m-%d-%H:%M:%S') }} - Update Failed."
+            create: yes

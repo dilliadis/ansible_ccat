@@ -1,0 +1,7 @@
+mynames:
+- name: anna
+  groups: wheel
+- name: lisa
+  groups: users
+- name: linda
+  groups: users

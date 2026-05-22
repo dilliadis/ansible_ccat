@@ -1,0 +1,9 @@
+---
+- name: demo loop 3
+  hosts: localhost
+  vars_files:
+  - usernames
+  tasks:
+  - debug:
+      msg: showing {{ item.name }} with {{ item.groups }} 
+    loop: "{{ mynames }}"
