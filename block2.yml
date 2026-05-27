@@ -1,0 +1,26 @@
+---
+- name: using blocks
+  hosts: ansible1
+  tasks:
+  - name: intended  to be successful
+    block:
+    - name: removing a file
+      shell:
+        cmd: rm /var/www/html/index.html
+    - name: printing status
+      debug:
+        msg: "file removed successfully"
+    rescue:
+    - name: create  a file
+      shell:
+        cmd: touch /var/www/html/index.html
+    - name: printing status
+      debug:
+        msg: "file created successfully"
+    always:
+    - name: writing message to a file
+      shell:
+        cmd: logger hello
+    - name: always printing status
+      debug:
+        msg: "this works"

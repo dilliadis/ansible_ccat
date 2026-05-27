@@ -1,0 +1,26 @@
+---
+- name: file copy modules
+  hosts: all
+  tasks:
+    - name: copy file demo
+      copy:
+        src: /etc/hosts
+        dest: /tmp/
+    - name: add some lines in a file hosts
+      blockinfile:
+        path: /tmp/hosts
+        block: |
+          10.0.56.101 host1.dilli.local
+          10.0.56.102 host2.dilli.local
+        state: present
+    - name: verify  the checksum of the file
+      stat:
+        path: /tmp/hosts
+        checksum_algorithm: md5
+      register: result
+    - debug:
+        msg: "The checksum of the file is {{ result.stat.checksum }}"
+    - name: fetch a file
+      fetch:
+        src: /tmp/hosts
+        dest: /tmp/

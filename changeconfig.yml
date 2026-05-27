@@ -1,0 +1,23 @@
+---
+- name: find config
+  hosts: localhost
+  become: true
+  tasks:
+    - name: find ansible config files
+      find:
+        paths: /home/ansible/ansible_proj/ansible_ccat/
+        patterns: "*.cfg"
+        recurse: yes
+      register: output
+    - debug:
+        var: item.path
+      with items: "{{ output.files }}"
+    - blockinfile:
+        path: "{{ item.path }}"
+        insertafter: "defaults"
+        marker: "##<!-- {mark} ANSIBLE MANAGED BLOCK -->##"
+        block: |
+          fact_caching = redis
+          fact_cahing_timeout = 3600
+          fact_caching_connection = localhost:6379:0
+      with items: "{{ output.files }}"

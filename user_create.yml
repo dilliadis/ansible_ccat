@@ -1,0 +1,16 @@
+---
+- name: New user creation
+  hosts: ansible1
+  vars:
+    new_user: "madina"
+    new_user_password: "newuserpassword"
+  tasks:
+    - name: Create a new user
+      command: "useradd {{ new_user }}"
+      register: user_creation
+    - name: Check if the user exists
+      command: "id {{ new_user }}"
+      register: user_check
+      failed_when: user_check.rc != 0
+      changed_when: false
+

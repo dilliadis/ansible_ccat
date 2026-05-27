@@ -1,0 +1,14 @@
+---
+- name: demonstrating fail module
+  hosts: localhost
+  ignore_errors: true
+  tasks:
+    - name: showing failure
+      command: echo "hello world"
+      register: command_result
+    - name: report a failure
+      fail:
+        msg: "This task has failed intentionally" 
+      when: "'world' in command_result.stdout"
+    - debug:
+        msg: "Showing  this"

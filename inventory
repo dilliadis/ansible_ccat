@@ -1,5 +1,6 @@
 [redhat]
 ansible1
+ansible2
 rhel1
 
 [ubuntu]

@@ -1,0 +1,14 @@
+---
+- name: idempotant command
+  ignore_errors: yes
+  hosts: ansible1
+  tasks:
+  - command: useradd john
+    register: newuser
+  - name: rc 9 is OK
+    assert:
+      that:
+      - newuser.rc == 9
+      success_msg: User already exists but that'sOK because we're now idempotant
+  - debug:
+      msg: continuing here
